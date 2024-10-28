@@ -4,90 +4,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Teaser Creator</title>
-    
-    <!-- Meta tags for better SEO and sharing -->
-    <meta name="description" content="Create professional job teasers easily with live preview">
-    <meta name="author" content="Job Teaser Creator">
-    
-    <!-- Stylesheets -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header>
+    <div class="header">
         <h1>Job Teaser Creator</h1>
         <p class="subtitle">Create professional job teasers in minutes</p>
-    </header>
+    </div>
 
-    <main class="container">
-        <!-- Form Section -->
-        <section class="form-container">
+    <div class="container">
+        <div class="form-container">
             <h2>Enter Job Details</h2>
             <form id="jobForm">
-                <!-- Basic Info -->
                 <div class="form-group">
                     <label for="jobTitle">Job Title</label>
-                    <input type="text" id="jobTitle" name="jobTitle" required>
+                    <input type="text" id="jobTitle" required>
                 </div>
 
                 <div class="form-group">
                     <label for="companyName">Company Name</label>
-                    <input type="text" id="companyName" name="companyName" required>
+                    <input type="text" id="companyName" required>
                 </div>
 
                 <div class="form-group">
                     <label for="location">Location</label>
-                    <input type="text" id="location" name="location" required>
+                    <input type="text" id="location" required>
                 </div>
 
                 <div class="form-group">
                     <label for="logoUrl">Company Logo URL</label>
-                    <input type="url" id="logoUrl" name="logoUrl" placeholder="https://example.com/logo.png" required>
+                    <input type="url" id="logoUrl" placeholder="https://example.com/logo.png" required>
                 </div>
 
-                <!-- Detailed Info -->
                 <div class="form-group">
                     <label for="about">About the Role</label>
-                    <textarea id="about" name="about" rows="4" required></textarea>
+                    <textarea id="about" required></textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="requirements">Key Requirements</label>
-                    <textarea id="requirements" name="requirements" rows="4" required></textarea>
+                    <textarea id="requirements" required></textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="benefits">Benefits</label>
-                    <textarea id="benefits" name="benefits" rows="4" required></textarea>
+                    <textarea id="benefits" required></textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="applyUrl">Application URL</label>
-                    <input type="url" id="applyUrl" name="applyUrl" placeholder="https://example.com/apply" required>
+                    <input type="url" id="applyUrl" placeholder="https://example.com/apply" required>
                 </div>
 
-                <!-- Form Controls -->
                 <div class="button-group">
-                    <button type="button" id="previewBtn">Update Preview</button>
-                    <button type="button" id="downloadBtn">Download Teaser</button>
-                    <button type="reset" id="resetBtn">Reset Form</button>
+                    <button type="button" id="previewBtn" class="btn-primary">Update Preview</button>
+                    <button type="button" id="downloadBtn" class="btn-success">Download Teaser</button>
+                    <button type="button" id="resetBtn" class="btn-secondary">Reset Form</button>
                 </div>
             </form>
-        </section>
+        </div>
 
-        <!-- Preview Section -->
-        <section class="preview-container">
+        <div class="preview-container">
             <h2>Live Preview</h2>
             <div id="previewArea" class="preview">
-                <!-- Preview content will be inserted here by JavaScript -->
+                <p class="preview-placeholder">Your job teaser preview will appear here...</p>
             </div>
-        </section>
-    </main>
+        </div>
+    </div>
 
     <footer>
         <p>&copy; 2024 Job Teaser Creator. Create and share job teasers easily.</p>
     </footer>
 
-    <!-- Scripts -->
     <script src="js/form.js"></script>
     <script src="js/preview.js"></script>
     <script src="js/main.js"></script>
