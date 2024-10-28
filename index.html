@@ -4,80 +4,208 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Teaser Creator</title>
-    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f3f2ef;
+        }
+
+        h1, h2, h3 {
+            color: #1a1a1a;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        input[type="url"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        button {
+            background-color: #0a66c2;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 16px;
+            cursor: pointer;
+            margin-right: 10px;
+            font-weight: 500;
+        }
+
+        button:hover {
+            background-color: #004182;
+        }
+
+        .preview {
+            margin-top: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #666;
+        }
+
+        /* Reset Form button */
+        button[type="reset"] {
+            background-color: #f3f2ef;
+            color: #1a1a1a;
+        }
+
+        /* Preview area */
+        #previewArea {
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            background: white;
+        }
+    </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Job Teaser Creator</h1>
-        <p class="subtitle">Create professional job teasers in minutes</p>
-    </div>
+    <h1>Job Teaser Creator</h1>
+    <p>Create professional job teasers in minutes</p>
 
-    <div class="container">
-        <div class="form-container">
-            <h2>Enter Job Details</h2>
-            <form id="jobForm">
-                <div class="form-group">
-                    <label for="jobTitle">Job Title</label>
-                    <input type="text" id="jobTitle" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="companyName">Company Name</label>
-                    <input type="text" id="companyName" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="location">Location</label>
-                    <input type="text" id="location" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="logoUrl">Company Logo URL</label>
-                    <input type="url" id="logoUrl" placeholder="https://example.com/logo.png" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="about">About the Role</label>
-                    <textarea id="about" required></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="requirements">Key Requirements</label>
-                    <textarea id="requirements" required></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="benefits">Benefits</label>
-                    <textarea id="benefits" required></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="applyUrl">Application URL</label>
-                    <input type="url" id="applyUrl" placeholder="https://example.com/apply" required>
-                </div>
-
-                <div class="button-group">
-                    <button type="button" id="previewBtn" class="btn-primary">Update Preview</button>
-                    <button type="button" id="downloadBtn" class="btn-success">Download Teaser</button>
-                    <button type="button" id="resetBtn" class="btn-secondary">Reset Form</button>
-                </div>
-            </form>
+    <h2>Enter Job Details</h2>
+    <form id="jobForm">
+        <div class="form-group">
+            <label for="jobTitle">Job Title</label>
+            <input type="text" id="jobTitle" required>
         </div>
 
-        <div class="preview-container">
-            <h2>Live Preview</h2>
-            <div id="previewArea" class="preview">
-                <p class="preview-placeholder">Your job teaser preview will appear here...</p>
-            </div>
+        <div class="form-group">
+            <label for="companyName">Company Name</label>
+            <input type="text" id="companyName" required>
         </div>
+
+        <div class="form-group">
+            <label for="location">Location</label>
+            <input type="text" id="location" required>
+        </div>
+
+        <div class="form-group">
+            <label for="logoUrl">Company Logo URL</label>
+            <input type="url" id="logoUrl" placeholder="https://example.com/logo.png" required>
+        </div>
+
+        <div class="form-group">
+            <label for="about">About the Role</label>
+            <textarea id="about" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="requirements">Key Requirements</label>
+            <textarea id="requirements" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="benefits">Benefits</label>
+            <textarea id="benefits" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="applyUrl">Application URL</label>
+            <input type="url" id="applyUrl" placeholder="https://example.com/apply" required>
+        </div>
+
+        <div class="button-group">
+            <button type="button" id="updatePreview">Update Preview</button>
+            <button type="button" id="downloadTeaser">Download Teaser</button>
+            <button type="reset">Reset Form</button>
+        </div>
+    </form>
+
+    <h2>Live Preview</h2>
+    <div id="previewArea">
+        Your job teaser preview will appear here...
     </div>
 
     <footer>
         <p>&copy; 2024 Job Teaser Creator. Create and share job teasers easily.</p>
     </footer>
 
-    <script src="js/form.js"></script>
-    <script src="js/preview.js"></script>
-    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('jobForm');
+            const previewArea = document.getElementById('previewArea');
+            
+            // Update Preview button
+            document.getElementById('updatePreview').addEventListener('click', function() {
+                updatePreview();
+            });
+            
+            // Reset Form button
+            form.addEventListener('reset', function() {
+                previewArea.innerHTML = 'Your job teaser preview will appear here...';
+            });
+            
+            // Download button
+            document.getElementById('downloadTeaser').addEventListener('click', function() {
+                alert('Download feature coming soon!');
+            });
+
+            function updatePreview() {
+                const jobTitle = document.getElementById('jobTitle').value;
+                const companyName = document.getElementById('companyName').value;
+                const location = document.getElementById('location').value;
+                const logoUrl = document.getElementById('logoUrl').value;
+                const about = document.getElementById('about').value;
+                const requirements = document.getElementById('requirements').value;
+                const benefits = document.getElementById('benefits').value;
+                const applyUrl = document.getElementById('applyUrl').value;
+
+                previewArea.innerHTML = `
+                    <div style="border: 1px solid #ddd; padding: 20px; border-radius: 8px;">
+                        <div style="display: flex; align-items: center; margin-bottom: 20px;">
+                            ${logoUrl ? `<img src="${logoUrl}" alt="Company Logo" style="width: 60px; height: 60px; margin-right: 15px; object-fit: contain;">` : ''}
+                            <div>
+                                <h3 style="margin: 0;">${jobTitle}</h3>
+                                <p style="margin: 5px 0;">${companyName} - ${location}</p>
+                            </div>
+                        </div>
+                        <div style="margin: 15px 0;">
+                            <h4>About the Role</h4>
+                            <p>${about.replace(/\n/g, '<br>')}</p>
+                        </div>
+                        <div style="margin: 15px 0;">
+                            <h4>Requirements</h4>
+                            <p>${requirements.replace(/\n/g, '<br>')}</p>
+                        </div>
+                        <div style="margin: 15px 0;">
+                            <h4>Benefits</h4>
+                            <p>${benefits.replace(/\n/g, '<br>')}</p>
+                        </div>
+                        <a href="${applyUrl}" target="_blank" style="display: inline-block; background: #0a66c2; color: white; padding: 10px 20px; text-decoration: none; border-radius: 16px; margin-top: 15px;">Apply Now</a>
+                    </div>
+                `;
+            }
+        });
+    </script>
 </body>
 </html>
