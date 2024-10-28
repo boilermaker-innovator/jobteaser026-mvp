@@ -1,83 +1,100 @@
-const PreviewGenerator = {
+// Form handling functionality
+const FormHandler = {
+    formFields: [
+        'jobTitle',
+        'companyName',
+        'location',
+        'logoUrl',
+        'about',
+        'requirements',
+        'benefits',
+        'applyUrl'
+    ],
+
     init() {
-        this.previewArea = document.getElementById('previewArea');
-        this.setupPreviewArea();
+        this.form = document.getElementById('jobForm');
+        this.setupEventListeners();
+        this.setupAutoSave();
     },
 
-    setupPreviewArea() {
-        if (!this.previewArea) {
-            console.error('Preview area not found');
-            return;
-        }
-        this.clearPreview();
+    setupEventListeners() {
+        // Preview button
+        document.getElementById('previewBtn').addEventListener('click', () => {
+            this.handlePreview();
+        });
+
+        // Reset button
+        document.getElementById('resetBtn').addEventListener('click', () => {
+            this.resetForm();
+        });
+
+        // Download button
+        document.getElementById('downloadBtn').addEventListener('click', () => {
+            this.handleDownload();
+        });
     },
 
-    updatePreview(data) {
-        if (!this.previewArea) return;
-
-        const previewHtml = `
-            <div class="job-preview">
-                <div class="job-header">
-                    ${data.logoUrl ? `<img src="${data.logoUrl}" alt="${data.companyName} logo" class="company-logo">` : ''}
-                    <div class="job-title-section">
-                        <h2>${data.jobTitle}</h2>
-                        <h3>${data.companyName}</h3>
-                        <p class="location">${data.location}</p>
-                    </div>
-                </div>
-                
-                <div class="job-details">
-                    <section class="about">
-                        <h4>About the Role</h4>
-                        <p>${this.formatText(data.about)}</p>
-                    </section>
-                    
-                    <section class="requirements">
-                        <h4>Requirements</h4>
-                        <p>${this.formatText(data.requirements)}</p>
-                    </section>
-                    
-                    <section class="benefits">
-                        <h4>Benefits</h4>
-                        <p>${this.formatText(data.benefits)}</p>
-                    </section>
-                </div>
-                
-                <div class="apply-section">
-                    <a href="${data.applyUrl}" class="apply-button" target="_blank">Apply Now</a>
-                </div>
-            </div>
-        `;
-
-        this.previewArea.innerHTML = previewHtml;
-    },
-
-    formatText(text) {
-        if (!text) return '';
-        // Convert line breaks to HTML and handle bullet points
-        return text
-            .replace(/\n/g, '<br>')
-            .replace(/\*(.*?)\*/g, '<br>• $1');
-    },
-
-    async downloadTeaser() {
-        try {
-            // Create a canvas from the preview
-            const preview = document.querySelector('.job-preview');
-            if (!preview) return;
-
-            // Use html2canvas or similar library here
-            alert('Download feature coming soon!');
-            // In real implementation, would generate image and trigger download
-        } catch (error) {
-            console.error('Error generating teaser:', error);
-            alert('Error generating teaser. Please try again.');
+    handlePreview() {
+        if (this.validateForm()) {
+            const formData = this.getFormData();
+            PreviewGenerator.updatePreview(formData);
         }
     },
 
-    clearPreview() {
-        if (this.previewArea) {
-            this.previewArea.innerHTML = '<p class="preview-placeholder">Your job teaser preview will appear here...</p>';
+    handleDownload() {
+        if (this.validateForm()) {
+            const formData = this.getFormData();
+            PreviewGenerator.downloadTeaser(formData);
+        }
+    },
+
+    validateForm() {
+        let isValid = true;
+        this.formFields.forEach(fieldId => {
+            const field = document.getElementById(fieldId);
+            if (!field.value.trim()) {
+                isValid = false;
+                field.classList.add('invalid');
+            } else {
+                field.classList.remove('invalid');
+            }
+        });
+        return isValid;
+    },
+
+    getFormData() {
+        const data = {};
+        this.formFields.forEach(fieldId => {
+            data[fieldId] = document.getElementById(fieldId).value.trim();
+        });
+        return data;
+    },
+
+    resetForm() {
+        this.form.reset();
+        PreviewGenerator.clearPreview();
+        localStorage.removeItem('jobTeaserData');
+    },
+
+    setupAutoSave() {
+        // Auto-save form data
+        this.formFields.forEach(fieldId => {
+            document.getElementById(fieldId).addEventListener('input', () => {
+                const formData = this.getFormData();
+                localStorage.setItem('jobTeaserData', JSON.stringify(formData));
+            });
+        });
+
+        // Load saved data if exists
+        const savedData = localStorage.getItem('jobTeaserData');
+        if (savedData) {
+            const formData = JSON.parse(savedData);
+            Object.keys(formData).forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                if (field) {
+                    field.value = formData[fieldId];
+                }
+            });
         }
     }
 };
