@@ -1,78 +1,104 @@
+// Preview generation functionality
 const PreviewGenerator = {
     init() {
         this.previewArea = document.getElementById('previewArea');
-        this.setupPreviewArea();
-    },
-
-    setupPreviewArea() {
-        if (!this.previewArea) {
-            console.error('Preview area not found');
-            return;
-        }
-        this.clearPreview();
     },
 
     updatePreview(data) {
         if (!this.previewArea) return;
 
-        const previewHtml = `
+        this.previewArea.innerHTML = `
             <div class="job-preview">
-                <div class="job-header">
-                    ${data.logoUrl ? `<img src="${data.logoUrl}" alt="${data.companyName} logo" class="company-logo">` : ''}
-                    <div class="job-title-section">
-                        <h2>${data.jobTitle}</h2>
-                        <h3>${data.companyName}</h3>
-                        <p class="location">${data.location}</p>
+                <div class="preview-header">
+                    ${data.logoUrl ? `
+                        <img src="${data.logoUrl}" alt="${data.companyName} logo" class="company-logo">
+                    ` : ''}
+                    <div class="preview-title">
+                        <h3>${data.jobTitle}</h3>
+                        <p>${data.companyName} - ${data.location}</p>
                     </div>
                 </div>
                 
-                <div class="job-details">
-                    <section class="about">
+                <div class="preview-content">
+                    <section class="preview-section">
                         <h4>About the Role</h4>
                         <p>${this.formatText(data.about)}</p>
                     </section>
                     
-                    <section class="requirements">
+                    <section class="preview-section">
                         <h4>Requirements</h4>
                         <p>${this.formatText(data.requirements)}</p>
                     </section>
                     
-                    <section class="benefits">
+                    <section class="preview-section">
                         <h4>Benefits</h4>
                         <p>${this.formatText(data.benefits)}</p>
                     </section>
                 </div>
                 
-                <div class="apply-section">
+                <div class="preview-footer">
                     <a href="${data.applyUrl}" class="apply-button" target="_blank">Apply Now</a>
                 </div>
             </div>
         `;
 
-        this.previewArea.innerHTML = previewHtml;
+        this.addPreviewStyles();
     },
 
     formatText(text) {
         if (!text) return '';
-        // Convert line breaks to HTML and handle bullet points
         return text
             .replace(/\n/g, '<br>')
-            .replace(/\*(.*?)\*/g, '<br>• $1');
+            .replace(/\*(.*?)\*/g, '<strong>$1</strong>')
+            .replace(/- (.*?)(\n|$)/g, '•&nbsp;$1<br>');
+    },
+
+    addPreviewStyles() {
+        const style = document.createElement('style');
+        style.textContent = `
+            .job-preview {
+                font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            }
+            .preview-header {
+                display: flex;
+                align-items: center;
+                margin-bottom: 1.5rem;
+            }
+            .company-logo {
+                width: 80px;
+                height: 80px;
+                object-fit: contain;
+                margin-right: 1rem;
+                border-radius: 8px;
+            }
+            .preview-title h3 {
+                font-size: 1.5rem;
+                margin-bottom: 0.5rem;
+            }
+            .preview-section {
+                margin-bottom: 1.5rem;
+            }
+            .preview-section h4 {
+                color: #0077B5;
+                margin-bottom: 0.5rem;
+            }
+            .apply-button {
+                display: inline-block;
+                background: #0077B5;
+                color: white;
+                padding: 0.75rem 2rem;
+                border-radius: 24px;
+                text-decoration: none;
+                font-weight: 600;
+                margin-top: 1rem;
+            }
+        `;
+        document.head.appendChild(style);
     },
 
     async downloadTeaser() {
-        try {
-            // Create a canvas from the preview
-            const preview = document.querySelector('.job-preview');
-            if (!preview) return;
-
-            // Use html2canvas or similar library here
-            alert('Download feature coming soon!');
-            // In real implementation, would generate image and trigger download
-        } catch (error) {
-            console.error('Error generating teaser:', error);
-            alert('Error generating teaser. Please try again.');
-        }
+        alert('Download feature coming soon!');
+        // TODO: Implement download functionality
     },
 
     clearPreview() {
